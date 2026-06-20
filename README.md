@@ -1,4 +1,4 @@
-# MultiSig Vault — Decentralizovani novčanik sa višestrukim potpisima
+# Decentralizovani novčanik sa višestrukim potpisima
 
 Decentralizovana aplikacija (DApp) koja implementira **M-of-N multisignature novčanik** na Ethereum blockchainu. Transakcija se izvršava tek kada je odobri minimalni unapred definisani broj vlasnika (M od ukupno N), čime se eliminiše jedinstvena tačka otkaza i znatno otežava zloupotreba ili krađa sredstava.
 

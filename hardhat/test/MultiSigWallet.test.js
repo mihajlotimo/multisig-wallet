@@ -1,9 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-// ============================================================
-//  MultiSigWallet – kompletni testovi (Hardhat + Ethers v6)
-// ============================================================
+//  MultiSigWallet –  testovi 
 
 describe("MultiSigWallet", function () {
   let wallet;
@@ -27,9 +25,7 @@ describe("MultiSigWallet", function () {
     );
   });
 
-  // ==========================================================
-  //  1. DEPLOYMENT
-  // ==========================================================
+  // DEPLOYMENT
   describe("Deployment", function () {
     it("ispravno čuva listu vlasnika", async function () {
       const owners = await wallet.getOwners();
@@ -83,9 +79,7 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
-  //  2. DEPOSIT
-  // ==========================================================
+  // DEPOSIT
   describe("Deposit", function () {
     it("prima ETH i emituje Deposit event", async function () {
       const amount = ethers.parseEther("1.0");
@@ -107,9 +101,7 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
-  //  3. PREDLAGANJE TRANSAKCIJE
-  // ==========================================================
+  // PREDLAGANJE TRANSAKCIJE
   describe("proposeTransaction", function () {
     it("vlasnik može da predloži transakciju", async function () {
       const value = ethers.parseEther("0.1");
@@ -153,9 +145,7 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
-  //  4. ODOBRAVANJE TRANSAKCIJE
-  // ==========================================================
+  // ODOBRAVANJE TRANSAKCIJE
   describe("approveTransaction", function () {
     beforeEach(async function () {
       // Depozit i predlog za sve testove odobrenja
@@ -201,9 +191,7 @@ describe("MultiSigWallet", function () {
       ).to.be.revertedWith("Transaction does not exist");
     });
 
-    // ==========================================================
-    //  5. AUTOMATSKO IZVRŠENJE PO DOSTIZANJU PRAGA
-    // ==========================================================
+    // AUTOMATSKO IZVRŠENJE PO DOSTIZANJU PRAGA
     it("izvršava transakciju kada se dostigne prag (M=2)", async function () {
       const balBefore = await ethers.provider.getBalance(recipient.address);
 
@@ -237,9 +225,7 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
-  //  6. OPOZIV ODOBRENJA
-  // ==========================================================
+  // OPOZIV ODOBRENJA
   describe("revokeApproval", function () {
     beforeEach(async function () {
       await owner1.sendTransaction({
@@ -284,10 +270,8 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
-  //  7. GOVERNANCE – addOwner / removeOwner / changeRequired
+  // GOVERNANCE – addOwner / removeOwner / changeRequired
   //     Mora proći kroz multisig (onlyWallet)
-  // ==========================================================
   describe("Governance (onlyWallet)", function () {
     it("addOwner direktno odbija poziv (nije kroz multisig)", async function () {
       await expect(
@@ -380,9 +364,7 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
-  //  8. REENTRANCY ZAŠTITA (checks-effects-interactions)
-  // ==========================================================
+  // REENTRANCY ZAŠTITA (checks-effects-interactions)
   describe("Reentrancy zaštita", function () {
     it("zlonamerni ugovor ne može da reentrantuje executeTransaction", async function () {
       // Deployujemo napadački ugovor
@@ -421,9 +403,7 @@ describe("MultiSigWallet", function () {
     });
   });
 
-  // ==========================================================
   //  9. VREMENSKI PEČATI
-  // ==========================================================
   describe("Vremenski pečati", function () {
     it("transakcija ima timestamp > 0", async function () {
       await wallet
